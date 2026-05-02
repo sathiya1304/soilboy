@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soilboy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 300;
+      background: #fff;
+      color: #1a1a1a;
+      font-size: 13px;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    /* ─────────────────────────────────
+       ANNOUNCEMENT BAR
+    ───────────────────────────────── */
+    .announcement-bar {
+      background: #1c1c1c;
+      color: #fff;
+      text-align: center;
+      padding: 9px 20px;
+      font-size: 11px;
+      letter-spacing: 0.07em;
+    }
+
+    /* ─────────────────────────────────
+       NAVIGATION
+    ───────────────────────────────── */
+    .site-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 44px;
+      background: #f5ede3;
+      position: relative;
+    }
+
+    .nav-left {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      flex: 1;
+    }
+
+    .nav-left a {
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+
+    .nav-left a:hover { opacity: 0.5; }
+
+    .nav-logo {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 17px;
+      letter-spacing: 0.03em;
+      font-weight: 400;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex: 1;
+      justify-content: flex-end;
+    }
+
+    .nav-right-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .nav-right-links a {
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+
+    .nav-right-links a:hover { opacity: 0.5; }
+
+    .nav-instagram svg {
+      width: 15px;
+      height: 15px;
+      display: block;
+    }
+
+    .btn-contact {
+      border: 1px solid #1a1a1a;
+      padding: 6px 14px;
+      font-size: 11px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-contact:hover { background: #1a1a1a; color: #fff; }
+
+    /* hamburger — hidden on desktop */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: #1a1a1a;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    /* mobile drawer */
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: #f5ede3;
+      padding: 20px 24px;
+      gap: 16px;
+      border-top: 1px solid #ddd5ca;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      padding: 4px 0;
+      border-bottom: 1px solid #e8dfd5;
+    }
+
+    .mobile-menu a:last-child { border-bottom: none; }
+
+    /* ─────────────────────────────────
+       HERO
+    ───────────────────────────────── */
+    .hero {
+      background: #f5ede3;
+      position: relative;
+      min-height: 560px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-img-wrap {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 66%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .hero-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center top;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 56px 44px;
+      max-width: 360px;
+    }
+
+    .hero-content h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 52px;
+      line-height: 1.08;
+      color: #1a1a1a;
+      margin-bottom: 24px;
+    }
+
+    .btn-pill {
+      display: inline-block;
+      border: 1px solid #1a1a1a;
+      padding: 8px 22px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      border-radius: 20px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-pill:hover { background: #1a1a1a; color: #fff; }
+
+    .btn-pill-white {
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,0.75);
+      padding: 8px 22px;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      border-radius: 20px;
+      color: #fff;
+      transition: background 0.2s;
+    }
+
+    .btn-pill-white:hover { background: rgba(255,255,255,0.15); }
+
+    /* ─────────────────────────────────
+       FEATURED PRODUCTS
+    ───────────────────────────────── */
+    .featured-products {
+      padding: 60px 44px;
+      background: #f9f6f2;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .section-header h2 {
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+    }
+
+    .btn-tag {
+      display: inline-block;
+      border: 1px solid #c8c0b6;
+      padding: 4px 12px;
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      border-radius: 12px;
+      color: #666;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-tag:hover { border-color: #1a1a1a; color: #1a1a1a; }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .product-card { position: relative; }
+
+    .badge-sold-out {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: #1a1a1a;
+      color: #fff;
+      font-size: 8px;
+      letter-spacing: 0.12em;
+      padding: 3px 8px;
+      z-index: 2;
+      text-transform: uppercase;
+    }
+
+    .product-img-wrap {
+      background: #ede7de;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-img-wrap img {
+      width: 78%;
+      height: 78%;
+      object-fit: contain;
+      transition: transform 0.4s ease;
+    }
+
+    .product-card:hover .product-img-wrap img { transform: scale(1.05); }
+
+    .product-name {
+      font-size: 12px;
+      font-weight: 400;
+      margin-bottom: 5px;
+      letter-spacing: 0.01em;
+    }
+
+    .product-price {
+      font-size: 11px;
+      color: #999;
+    }
+
+    /* ─────────────────────────────────
+       DARK FEATURE — PEBBLES
+    ───────────────────────────────── */
+    .dark-feature {
+      position: relative;
+      height: 440px;
+      overflow: hidden;
+      background: #111;
+    }
+
+    .dark-feature img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.55) saturate(0.4);
+    }
+
+    .dark-feature-overlay {
+      position: absolute;
+      bottom: 44px;
+      left: 44px;
+      color: #fff;
+    }
+
+    .dark-feature-overlay h3 {
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      margin-bottom: 5px;
+    }
+
+    .dark-feature-overlay p {
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      margin-bottom: 18px;
+      opacity: 0.8;
+    }
+
+    /* ─────────────────────────────────
+       SPLIT FEATURE + MARQUEE
+    ───────────────────────────────── */
+    .split-feature-section {
+      background: #f9f6f2;
+      overflow: hidden;
+    }
+
+    /* large marquee at top */
+    .marquee-large {
+      overflow: hidden;
+      padding: 14px 0 10px;
+      border-bottom: 1px solid #e8e0d6;
+    }
+
+    .marquee-large-track {
+      display: flex;
+      white-space: nowrap;
+      animation: marquee-move 22s linear infinite;
+    }
+
+    .marquee-large-track span {
+      font-size: 62px;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: #cdc5ba;
+      padding: 0 40px;
+      line-height: 1;
+    }
+
+    @keyframes marquee-move {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* split grid below marquee */
+    .split-feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 500px;
+    }
+
+    .split-img { overflow: hidden; }
+
+    .split-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .split-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 60px 64px;
+      background: #f9f6f2;
+    }
+
+    .split-content p.body-sm {
+      font-size: 13px;
+      line-height: 1.8;
+      color: #666;
+      margin-bottom: 28px;
+      max-width: 320px;
+    }
+
+    /* ─────────────────────────────────
+       LIFESTYLE / GIFT
+    ───────────────────────────────── */
+    .lifestyle-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 480px;
+    }
+
+    .lifestyle-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 56px;
+      background: #f5ede3;
+    }
+
+    .eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #aaa;
+      margin-bottom: 14px;
+    }
+
+    .lifestyle-content h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 34px;
+      line-height: 1.2;
+      margin-bottom: 18px;
+    }
+
+    .lifestyle-content p {
+      font-size: 13px;
+      line-height: 1.8;
+      color: #666;
+      margin-bottom: 28px;
+    }
+
+    .lifestyle-img { overflow: hidden; }
+
+    .lifestyle-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ─────────────────────────────────
+       MODULAR SHELVES
+    ───────────────────────────────── */
+    .shelves-section {
+      padding: 64px 44px;
+      background: #fff;
+    }
+
+    .shelves-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .shelf-img {
+      background: #f0ebe3;
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .shelf-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .shelf-card:hover .shelf-img img { transform: scale(1.04); }
+
+    .shelf-name {
+      font-size: 12px;
+      font-weight: 400;
+      margin-bottom: 5px;
+    }
+
+    .shelf-price {
+      font-size: 11px;
+      color: #999;
+    }
+
+    /* ─────────────────────────────────
+       CERAMICS
+    ───────────────────────────────── */
+    .ceramics-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 440px;
+    }
+
+    .ceramics-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 56px;
+      background: #f9f6f2;
+    }
+
+    .ceramics-content h2 {
+      font-size: 28px;
+      font-weight: 400;
+      line-height: 1.35;
+      margin-bottom: 24px;
+    }
+
+    .ceramics-img { overflow: hidden; }
+
+    .ceramics-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ─────────────────────────────────
+       SOIL MIX + PLANT CARE
+    ───────────────────────────────── */
+    .two-col-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 360px;
+    }
+
+    .two-col-block {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .two-col-block img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .two-col-overlay {
+      position: absolute;
+      bottom: 36px;
+      left: 36px;
+      color: #fff;
+    }
+
+    .two-col-overlay h3 {
+      font-size: 20px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      margin-bottom: 16px;
+    }
+
+    /* ─────────────────────────────────
+       ABOUT
+    ───────────────────────────────── */
+    .about-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 420px;
+    }
+
+    .about-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 56px;
+      background: #f5ede3;
+    }
+
+    .about-content h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 34px;
+      line-height: 1.25;
+      margin-bottom: 18px;
+    }
+
+    .about-content p {
+      font-size: 13px;
+      line-height: 1.8;
+      color: #666;
+      margin-bottom: 24px;
+    }
+
+    .about-img { overflow: hidden; }
+
+    .about-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* ─────────────────────────────────
+       NEWSLETTER
+    ───────────────────────────────── */
+    .newsletter {
+      background: #1a1a1a;
+      color: #fff;
+      text-align: center;
+      padding: 64px 40px;
+    }
+
+    .newsletter h2 {
+      font-size: 20px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      margin-bottom: 8px;
+    }
+
+    .newsletter p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 28px;
+      letter-spacing: 0.03em;
+    }
+
+    .newsletter-form {
+      display: flex;
+      justify-content: center;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 11px 18px;
+      font-size: 12px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: transparent;
+      color: #fff;
+      outline: none;
+      letter-spacing: 0.04em;
+      font-family: inherit;
+    }
+
+    .newsletter-form input::placeholder { color: rgba(255,255,255,0.35); }
+
+    .newsletter-form button {
+      padding: 11px 24px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      background: #fff;
+      color: #1a1a1a;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity 0.2s;
+      white-space: nowrap;
+    }
+
+    .newsletter-form button:hover { opacity: 0.85; }
+
+    /* ─────────────────────────────────
+       FOOTER
+    ───────────────────────────────── */
+    .site-footer {
+      background: #f5ede3;
+      padding: 52px 44px 28px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-bottom: 44px;
+    }
+
+    .footer-col h4 {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      color: #aaa;
+    }
+
+    .footer-col ul { list-style: none; }
+
+    .footer-col ul li { margin-bottom: 10px; }
+
+    .footer-col ul li a,
+    .footer-col p {
+      font-size: 12px;
+      color: #555;
+      line-height: 1.7;
+      letter-spacing: 0.01em;
+      transition: color 0.2s;
+    }
+
+    .footer-col ul li a:hover { color: #1a1a1a; }
+
+    .footer-social {
+      display: flex;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .footer-social a {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #666;
+      transition: color 0.2s;
+    }
+
+    .footer-social a:hover { color: #1a1a1a; }
+
+    .footer-bottom {
+      border-top: 1px solid #ddd5c8;
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-bottom p,
+    .footer-bottom-links a {
+      font-size: 11px;
+      color: #aaa;
+      letter-spacing: 0.03em;
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-bottom-links a:hover { color: #555; }
+
+    /* ═══════════════════════════════════
+       RESPONSIVE — 1024px
+    ═══════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .site-nav { padding: 18px 32px; }
+      .hero-content { padding: 48px 32px; }
+      .hero-content h1 { font-size: 44px; }
+      .featured-products { padding: 52px 32px; }
+      .split-content { padding: 48px 44px; }
+      .lifestyle-content { padding: 48px 44px; }
+      .ceramics-content { padding: 48px 44px; }
+      .about-content { padding: 48px 44px; }
+      .shelves-section { padding: 52px 32px; }
+      .site-footer { padding: 44px 32px 24px; }
+    }
+
+    /* ═══════════════════════════════════
+       RESPONSIVE — 768px
+    ═══════════════════════════════════ */
+    @media (max-width: 768px) {
+      /* nav */
+      .site-nav { padding: 16px 20px; }
+      .nav-left { display: none; }
+      .nav-right-links { display: none; }
+      .hamburger { display: flex; }
+
+      /* hero */
+      .hero { min-height: 400px; }
+      .hero-img-wrap { width: 58%; opacity: 0.9; }
+      .hero-content { padding: 36px 20px; }
+      .hero-content h1 { font-size: 36px; }
+
+      /* products */
+      .featured-products { padding: 40px 20px; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+      /* dark feature */
+      .dark-feature { height: 340px; }
+      .dark-feature-overlay { left: 24px; bottom: 28px; }
+
+      /* marquee */
+      .marquee-large-track span { font-size: 40px; }
+
+      /* split */
+      .split-feature-grid { grid-template-columns: 1fr; }
+      .split-img { min-height: 280px; }
+      .split-content { padding: 40px 20px; }
+
+      /* lifestyle */
+      .lifestyle-section { grid-template-columns: 1fr; }
+      .lifestyle-img { min-height: 280px; order: -1; }
+      .lifestyle-content { padding: 40px 20px; }
+      .lifestyle-content h2 { font-size: 28px; }
+
+      /* shelves */
+      .shelves-section { padding: 40px 20px; }
+      .shelves-grid { grid-template-columns: repeat(2, 1fr); }
+
+      /* ceramics */
+      .ceramics-section { grid-template-columns: 1fr; }
+      .ceramics-img { min-height: 260px; order: -1; }
+      .ceramics-content { padding: 40px 20px; }
+      .ceramics-content h2 { font-size: 22px; }
+
+      /* two col */
+      .two-col-section { grid-template-columns: 1fr; }
+      .two-col-block { min-height: 260px; }
+
+      /* about */
+      .about-section { grid-template-columns: 1fr; }
+      .about-img { min-height: 260px; order: -1; }
+      .about-content { padding: 40px 20px; }
+      .about-content h2 { font-size: 28px; }
+
+      /* newsletter */
+      .newsletter { padding: 48px 20px; }
+
+      /* footer */
+      .site-footer { padding: 40px 20px 24px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; }
+    }
+
+    /* ═══════════════════════════════════
+       RESPONSIVE — 480px
+    ═══════════════════════════════════ */
+    @media (max-width: 480px) {
+      /* hero */
+      .hero { min-height: 340px; }
+      .hero-img-wrap { width: 52%; opacity: 0.75; }
+      .hero-content h1 { font-size: 30px; }
+
+      /* products */
+      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+      .product-img-wrap img { width: 85%; height: 85%; }
+
+      /* marquee */
+      .marquee-large-track span { font-size: 30px; }
+
+      /* shelves */
+      .shelves-grid { grid-template-columns: 1fr; }
+
+      /* newsletter */
+      .newsletter-form { flex-direction: column; }
+      .newsletter-form input { border-bottom: none; }
+
+      /* footer */
+      .footer-top { grid-template-columns: 1fr; gap: 24px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .footer-bottom-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ ANNOUNCEMENT BAR ═══ -->
+  <div class="announcement-bar">
+    Enjoy $15 off deliveries for orders above $200. PROMO CODE: 200FF
+  </div>
+
+  <!-- ═══ NAVIGATION ═══ -->
+  <nav class="site-nav">
+    <div class="nav-left">
+      <a href="#">Plants</a>
+      <a href="#">Workshops</a>
+      <a href="#">Lifestyle</a>
+    </div>
+
+    <a href="#" class="nav-logo">soilboy.</a>
+
+    <div class="nav-right">
+      <div class="nav-right-links">
+        <a href="#">Login</a>
+        <a href="#" class="nav-instagram" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 0 1-8 0"/>
+          </svg>
+        </a>
+        <a href="#" class="btn-contact">Contact us</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- mobile drawer -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#">Plants</a>
+    <a href="#">Workshops</a>
+    <a href="#">Lifestyle</a>
+    <a href="#">Login</a>
+    <a href="#">Cart</a>
+    <a href="#">Contact us</a>
+  </div>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <div class="hero-img-wrap">
+      <img
+        src="https://images.squarespace-cdn.com/content/v1/5f6effe2de91535318dd74a3/aeae4a1b-83f5-43fb-bc6d-8ed00c122aa0/IMG_4767.jpg"
+        alt="Featured plant"
+      >
+    </div>
+    <div class="hero-content">
+      <h1>&lsquo;As interesting<br>as a plant&rsquo;</h1>
+      <a href="#" class="btn-pill">Shop Now</a>
+    </div>
+  </section>
+
+  <!-- ═══ FEATURED PRODUCTS ═══ -->
+  <section class="featured-products">
+    <div class="section-header">
+      <h2>Featured Products</h2>
+      <a href="#" class="btn-tag">View All</a>
+    </div>
+    <div class="products-grid">
+
+      <div class="product-card">
+        <span class="badge-sold-out">SOLD OUT</span>
+        <div class="product-img-wrap">
+          <img
+            src="https://images.squarespace-cdn.com/content/v1/5f6effe2de91535318dd74a3/1694662109036-02S0GOXHZ6XY510AY657/feronallis-bonsai_obj02.jpg"
+            alt="Feroniella Bonsai"
+          >
+        </div>
+        <div class="product-name">Feroniella Bonsai</div>
+        <div class="product-price">from SGD 148.00</div>
+      </div>
+
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <img
+            src="https://images.squarespace-cdn.com/content/v1/5f6effe2de91535318dd74a3/490146cf-23df-4861-911a-c088bd41199b/Var-Ficus-Benjamina-obj1-as.jpg"
+            alt="Variegated Japanese Ficus Benjamina Baroque"
+          >
+        </div>
+        <div class="product-name">Variegated Japanese Ficus Benjamina Baroque — XS</div>
+        <div class="product-price">from SGD 108.00</div>
+      </div>
+
+      <div class="product-card">
+        <span class="badge-sold-out">SOLD OUT</span>
+        <div class="product-img-wrap">
+          <img
+            src="https://images.squarespace-cdn.com/content/v1/5f6effe2de91535318dd74a3/1702134017140-1GSMOV17W80N0HSBKEDE/Sophora_littlebaby_Orb-Speckled.jpg"
+            alt="Sophora Prostrata Little Baby"
+          >
+        </div>
+        <div class="product-name">Sophora Prostrata &lsquo;Little Baby&rsquo;</div>
+        <div class="product-price">from SGD 108.00</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ DARK FEATURE — PEBBLES ═══ -->
+  <section class="dark-feature">
+    <img
+      src="https://images.squarespace-cdn.com/content/v1/5f6effe2de91535318dd74a3/b27bc6f6-30d0-438c-a963-396a1eda8af9/WorkbySilo-Soilboy-34.jpg"
+      alt="Soilboy Pebbles"
+    >
+    <div class="dark-feature-overlay">
+      <h3>Soilboy Pebbles</h3>
+      <p>Handmade in South Korea</p>
+      <a href="#" class="btn-pill-white">Shop Now</a>
+    </div>
+  </section>
+
+  <!-- ═══ SPLIT FEATURE (with large marquee) ═══ -->
+  <section class="split-feature-section">
+
+    <!-- large marquee -->
+    <div class="marquee-large">
+      <div class="marquee-large-track">
+        <span>Featured Product</span>
+        <span>&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+        <span>Featured Product</span>
+        <span>&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+        <span>Featured Product</span>
+        <span>&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+        <span>Featured Product</span>
+        <span>&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+        <span>Featured Product</span>
+        <span>&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+        <span>Featured Product</span>
+        <span>&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+        <span>Featured Product</span>
+        <span>&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+        <span>Featured Product</span>
+        <span>&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+      </div>
+    </div>
+
+    <!-- split grid -->
+    <div class="split-feature-grid">
+      <div class="split-img">
+        <img
+          src="https://images.squarespace-cdn.com/content/v1/5f6effe2de91535318dd74a3/7212bfc5-b1cc-40e8-adc7-a98b3c0de496/Soilboy_Plant-Shelf-White-Lifestyle_2594.jpg"
+          alt="Soilboy Modular Plant Stand"
+        >
+      </div>
+      <div class="split-content">
+        <p class="body-sm">
+          Introducing Soilboy Pebbles in different Colours.<br>
+          Crafted with Handcrafted by Saemyou<br>
+          Ceramics — South Korea.<br>
+          Limited quantities available.
+        </p>
+        <a href="#" class="btn-pill">Shop Now</a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══ LIFESTYLE — MATCHA GIFT SET ═══ -->
+  <section class="lifestyle-section">
+    <div class="lifestyle-content">
+      <p class="eyebrow">Lifestyle</p>
+      <h2>Soilboy × All Day Matcha Club —<br>Matcha Holiday Gift Set</h2>
+      <p>A curated collaboration between Soilboy and All Day Matcha Club. The perfect gift for the plant and matcha lover.</p>
+      <a href="#" class="btn-pill">Shop now</a>
+    </div>
+    <div class="lifestyle-img">
+      <img
+        src="https://images.squarespace-cdn.com/content/v1/5f6effe2de91535318dd74a3/dfa8f3d1-632d-4679-8e39-d2164677ed81/IMG_9099-5.jpg"
+        alt="Matcha Holiday Gift Set"
+      >
+    </div>
+  </section>
+
+  <!-- ═══ MODULAR SHELVES ═══ -->
+  <section class="shelves-section">
+    <div class="section-header">
+      <h2>Modular Plant Stands</h2>
+      <a href="#" class="btn-tag">View All</a>
+    </div>
+    <div class="shelves-grid">
+
+      <div class="shelf-card">
+        <div class="shelf-img">
+          <img
+            src="https://images.squarespace-cdn.com/content/v1/5f6effe2de91535318dd74a3/7212bfc5-b1cc-40e8-adc7-a98b3c0de496/Soilboy_Plant-Shelf-White-Lifestyle_2594.jpg"
+            alt="Soilboy Modular Plant Stand Ivory"
+          >
+        </div>
+        <div class="shelf-name">Soilboy Modular Plant Stand — Ivory</div>
+        <div class="shelf-price">SGD 159.00</div>
+      </div>
+
+      <div class="shelf-card">
+        <div class="shelf-img">
+          <img
+            src="https://images.squarespace-cdn.com/content/v1/5f6effe2de91535318dd74a3/93c32b48-348d-4a3d-807c-fa85656c32f7/Soilboy_PSoilboy_Plant-Trolley-Lifestyle_2409.jpg"
+            alt="Soilboy Modular Plant Trolley"
+          >
+        </div>
+        <div class="shelf-name">Soilboy Modular Plant Trolley</div>
+        <div class="shelf-price">SGD 289.00</div>
+      </div>
+
+      <div class="shelf-card">
+        <div class="shelf-img">
+          <img
+            src="https://images.squarespace-cdn.com/content/v1/5f6effe2de91535318dd74a3/d32b840d-a657-4d0e-abc5-7441213d1689/Soilboy_Plant-Shelf-Black-Lifestyle_2541-edited.jpg"
+            alt="Soilboy Modular Plant Stand Black"
+          >
+        </div>
+        <div class="shelf-name">Soilboy Modular Plant Stand — Black</div>
+        <div class="shelf-price">SGD 159.00</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ CERAMICS ═══ -->
+  <section class="ceramics-section">
+    <div class="ceramics-content">
+      <h2>Shop our collection<br>of ceramics planters</h2>
+      <a href="#" class="btn-pill">Shop now</a>
+    </div>
+    <div class="ceramics-img">
+      <img
+        src="https://images.squarespace-cdn.com/content/v1/5f6effe2de91535318dd74a3/ef322613-058e-4c7e-8694-b7163ee85b8a/IMG_8996.jpg"
+        alt="Ceramics Planters"
+      >
+    </div>
+  </section>
+
+  <!-- ═══ SOIL MIX + PLANT CARE ═══ -->
+  <section class="two-col-section">
+    <div class="two-col-block">
+      <img
+        src="https://images.squarespace-cdn.com/content/v1/5f6effe2de91535318dd74a3/b27bc6f6-30d0-438c-a963-396a1eda8af9/WorkbySilo-Soilboy-34.jpg"
+        alt="Soil Mix"
+        style="filter: brightness(0.6) saturate(0.5);"
+      >
+      <div class="two-col-overlay">
+        <h3>Soil Mix</h3>
+        <a href="#" class="btn-pill-white">Shop now</a>
+      </div>
+    </div>
+    <div class="two-col-block">
+      <img
+        src="https://images.squarespace-cdn.com/content/v1/5f6effe2de91535318dd74a3/1608083547321-9ATM69ZTK7JJ00BUM583/Soilboy-Website-2-2199_cropped.jpg"
+        alt="Plant Care"
+        style="filter: brightness(0.6);"
+      >
+      <div class="two-col-overlay">
+        <h3>Plant Care</h3>
+        <a href="#" class="btn-pill-white">Read more</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ABOUT ═══ -->
+  <section class="about-section">
+    <div class="about-content">
+      <p class="eyebrow">Our Mission</p>
+      <h2>Inspire curiosity for<br>greener things in life</h2>
+      <p>We believe that plants have the power to transform any space. Our mission is to make plant ownership accessible, enjoyable, and rewarding for everyone.</p>
+      <a href="#" class="btn-pill">About us</a>
+    </div>
+    <div class="about-img">
+      <img
+        src="https://images.squarespace-cdn.com/content/v1/5f6effe2de91535318dd74a3/1608125141194-VE22Q6OMGFMZHXBGIZRN/monstera-2.jpg"
+        alt="About Soilboy"
+      >
+    </div>
+  </section>
+
+  <!-- ═══ NEWSLETTER ═══ -->
+  <section class="newsletter">
+    <h2>Stay in the loop</h2>
+    <p>Sign up for plant care tips, new arrivals, and exclusive offers.</p>
+    <form class="newsletter-form" onsubmit="return false;">
+      <input type="email" placeholder="Your email address">
+      <button type="submit">Sign Up</button>
+    </form>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="site-footer">
+    <div class="footer-top">
+
+      <div class="footer-col">
+        <h4>Info</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Plant Care</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">FAQs &amp; Delivery</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#">Plants</a></li>
+          <li><a href="#">Potted Plants</a></li>
+          <li><a href="#">Planters</a></li>
+          <li><a href="#">Essentials</a></li>
+          <li><a href="#">Workshops</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Visit Us</h4>
+        <p>46 Kim Yam Road,<br>#02-07/8, S239351</p>
+        <p style="margin-top: 10px;">
+          <a href="mailto:hello@soilboy.sg" style="color:#555;transition:color 0.2s;">hello@soilboy.sg</a>
+        </p>
+        <div class="footer-social">
+          <a href="#">Facebook</a>
+          <a href="#">Instagram</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>Soilboy © 2025</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">FAQs &amp; Delivery</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const btn = document.getElementById('hamburger');
+    const menu = document.getElementById('mobile-menu');
+    btn.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
+    });
+  </script>
+
+</body>
+</html>
